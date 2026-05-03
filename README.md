@@ -29,6 +29,17 @@ Extraction structured information from the index (open extract.py to see queries
 python scripts/extract.py
 ```
 
+To add OCR text context from Reducto Parse for the pages retrieved from the index:
+```bash
+export REDUCTO_API_KEY=<your key>
+python scripts/extract.py --ocr_provider reducto
+```
+
+You can also enable it in code:
+```python
+extractor = Extractor(index_name="application", ocr_provider="reducto")
+```
+
 ### Sample output
 ```
 What losses have occurred in the past 5 years?

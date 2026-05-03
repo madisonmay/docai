@@ -1,10 +1,5 @@
-import base64
-from typing import Optional
-
-from byaldi import RAGMultiModalModel
-from langchain_core.messages import HumanMessage
+import fire
 from langchain_core.pydantic_v1 import BaseModel, Field
-from langchain_openai import ChatOpenAI
 from rich import print
 
 from docai.extractor import Extractor
@@ -38,8 +33,8 @@ class LossHistory(BaseModel):
     losses: list[Loss] = Field(description="Loss history")
 
 
-if __name__ == "__main__":
-    extractor = Extractor(index_name="application")
+def main(index_name: str = "application", ocr_provider: str | None = None):
+    extractor = Extractor(index_name=index_name, ocr_provider=ocr_provider)
     for query, data_model in [
         ("What losses have occurred in the past 5 years?", LossHistory),
         (
@@ -49,3 +44,7 @@ if __name__ == "__main__":
     ]:
         response = extractor.extract(query=query, data_model=data_model, k=3)
         print(query, response)
+
+
+if __name__ == "__main__":
+    fire.Fire(main)
